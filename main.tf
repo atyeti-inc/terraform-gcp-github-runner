@@ -141,7 +141,7 @@ module "control_plane" {
   private_key_secret_id      = google_secret_manager_secret.github_auth_secret.id
   private_key_secret_version = google_secret_manager_secret_version.github_auth_secret.version
 
-  image     = var.use_remote_repository ? "${module.artifact_registry[0].image_cache_url}/${var.remote_control_plane_image_name}" : var.control_plane_oci_image
+  image     = var.control_plane_oci_image != "" ? var.control_plane_oci_image : (var.use_remote_repository ? "${module.artifact_registry[0].image_cache_url}/${var.remote_control_plane_image_name}" : "")
   image_tag = local.effective_control_plane_version
 
   shutdown_schedule          = var.shutdown_schedule

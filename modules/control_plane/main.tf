@@ -34,7 +34,7 @@ locals {
 }
 
 resource "google_project_iam_member" "control_plane" {
-  for_each = toset(var.disable_service_account_management ? [] : ["compute.admin", "secretmanager.admin"])
+  for_each = toset(var.disable_service_account_management ? [] : ["compute.admin", "secretmanager.admin", "artifactregistry.reader"])
 
   project = var.project_id
   role    = "roles/${each.value}"
