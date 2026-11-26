@@ -133,23 +133,38 @@ func (c *Client) RemoveRunnerForInstance(instance *compute.Instance, ctx context
 
 	}
 
-	var runners *github.Runners
+	var allRunners []*github.Runner
+	opts := &github.ListRunnersOptions{
+		ListOptions: github.ListOptions{PerPage: 100},
+	}
 	switch runnerType {
 	case "repo":
-		runners, _, err = client.Actions.ListRunners(ctx, owner, repo, nil)
-		if err != nil {
-			err = fmt.Errorf("failed to list runners: %w", err)
-			return false, err
+		for {
+			runners, resp, err := client.Actions.ListRunners(ctx, owner, repo, opts)
+			if err != nil {
+				return false, fmt.Errorf("failed to list runners: %w", err)
+			}
+			allRunners = append(allRunners, runners.Runners...)
+			if resp.NextPage == 0 {
+				break
+			}
+			opts.Page = resp.NextPage
 		}
 	case "org":
-		runners, _, err = client.Actions.ListOrganizationRunners(ctx, owner, nil)
-		if err != nil {
-			err = fmt.Errorf("failed to list runners: %w", err)
-			return false, err
+		for {
+			runners, resp, err := client.Actions.ListOrganizationRunners(ctx, owner, opts)
+			if err != nil {
+				return false, fmt.Errorf("failed to list runners: %w", err)
+			}
+			allRunners = append(allRunners, runners.Runners...)
+			if resp.NextPage == 0 {
+				break
+			}
+			opts.Page = resp.NextPage
 		}
 	}
 	var runner *github.Runner
-	for _, itRunner := range runners.Runners {
+	for _, itRunner := range allRunners {
 		if strings.HasSuffix(itRunner.GetName(), instance.Name) {
 			runner = itRunner
 			break

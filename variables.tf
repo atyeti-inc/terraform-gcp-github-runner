@@ -102,7 +102,7 @@ variable "remote_webhook_image_name" {
 variable "remote_control_plane_image_name" {
   type        = string
   description = "The name of the control plane image in the remote repository. This should only be the image name as it is combined with the repository url to form the full path. This is only used if use_remote_repository is set to true"
-  default     = "pcg-gcp/terraform-gcp-github-runner/control-plane"
+  default     = "atyeti-inc/terraform-gcp-github-runner/control-plane"
 }
 
 variable "runner_image_path" {
