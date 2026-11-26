@@ -173,7 +173,7 @@ variable "include_install_step" {
 variable "runner_version" {
   description = "GitHub Runner version to install"
   type        = string
-  default     = ""
+  default     = "v0.8.4"
 }
 
 variable "runner_extra_labels" {
@@ -185,7 +185,7 @@ variable "runner_extra_labels" {
 variable "node_version" {
   description = "NodeJS version to install"
   type        = string
-  default     = ""
+  default     = "v0.8.4"
 }
 
 variable "ephemeral" {
@@ -221,13 +221,13 @@ variable "min_runner_count" {
 variable "control_plane_oci_image" {
   type        = string
   description = "The control plane OCI image to deploy. This needs to be the full path without the image tag. This is only used if use_remote_repository is set to false"
-  default     = ""
+  default     = "v0.8.4"
 }
 
 variable "control_plane_version" {
   type        = string
   description = "The version of the control plane to deploy. If not set the module version will be used"
-  default     = ""
+  default     = "v0.8.4"
 }
 
 variable "webhook_secret" {
@@ -250,13 +250,13 @@ variable "github_app_private_key_base64" {
 variable "webhook_oci_image" {
   type        = string
   description = "The webhook OCI image to deploy. This needs to be the full path withouth the image tag. This is only used if use_remote_repository is set to false"
-  default     = ""
+  default     = "v0.8.4"
 }
 
 variable "webhook_version" {
   type        = string
   description = "The version of the webhook to deploy. If not set the module version will be used"
-  default     = ""
+  default     = "v0.8.4"
 }
 
 variable "forward_delay_seconds" {
